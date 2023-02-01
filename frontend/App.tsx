@@ -60,7 +60,7 @@ const App = () => (
                   <TabBarIcon
                     focused={focused}
                     iconName="heart"
-                    text="Matches"
+                    text="Events"
                   />
                 ),
               }}
