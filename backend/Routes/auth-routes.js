@@ -13,4 +13,4 @@ router.post('/user', async(req, res) => {
   }).then(user => res.json(user));
 });
 
-module.exports=router
+module.exports = router
