@@ -1,5 +1,6 @@
-// module.exports = class User {
-//     constructor(/*age, image, info1, info2, info3, info4, location, match,name*/username, password, email) {
+const getDb = require('../util/database').getDb;
+class User {
+     constructor(/*age, image, info1, info2, info3, info4, location, match,name */  username, password, email) {
 //       //this.age = age;
 //       //this.image = image;
 //       //this.info1 = info1;
@@ -9,12 +10,24 @@
 //       //this.location = location;
 //       //this.match = match;
 //       //this.name = name;
-//       this.username=username;
-//       this.password=password;
-//       this.email=email;
-//     }
-// };
-const mongoose = require('mongoose');
+       this.username=username;
+       this.password=password;
+       this.email=email;
+     }
+     save(){
+         const db = getDb();
+         return db.collection('users')
+         .insertOne(this)
+        .then(result=>{
+            console.log("Successful from save method"+result);
+        })
+        .catch(err =>{
+             console.log(err);
+        });
+    } 
+};
+ 
+/*const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const UserSchema = new Schema({
     name:{
@@ -36,6 +49,6 @@ const UserSchema = new Schema({
     }
   });
   const User=mongoose.model('user',UserSchema);
-//   User.createIndexes()
-  module.exports=User
+//   User.createIndexes()*/
+  module.exports  =  User;
 //

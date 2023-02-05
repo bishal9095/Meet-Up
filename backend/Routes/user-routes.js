@@ -3,37 +3,42 @@ const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken');
-const Users=require('../Models/user')
+const User = require('../Models/user')
+const db = require('../util/database').getDb;
 
 
 router.post('/createUser',[
     // Validation bty expresss Validator
-    body('name','Enter a valid name').isLength({ min: 3 }),
+    body('username','Enter a valid name').isLength({ min: 3 }),
     body('email','Enter a valid email').isEmail(),
     body('password','Password should be minimum 5 chararcters').isLength({ min: 5 }),
 
-],async(req,res)=>{
-    let success=false
+],async(req,res,next)  =>  {
+    let success = false
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
+    if (!errors.isEmpty()) { 
       return res.status(400).json({success, errors: errors.array() });
     }
+    /* // id email already exists logic
     try {
-        
+        const _user= await db.collection('users').findOne({}, function (err, result) {if (findErr) throw findErr;
+          console.log(result.name);
+          })
     
-    let user= await Users.findOne({email:req.body.email})
-    
-    if (user){
+    if (_user){
         return res.status(400).json({success,error:"Email already exists"})
     }
+    */
     const salt= await bcrypt.genSalt(10)
     const secPass= await bcrypt.hash(req.body.password,salt)
-    user= await Users.create({
-        name: req.body.name,
-        password: secPass,
-        email:req.body.email
-      })
-      const data={
+    const _user= await new User(
+        req.body.username,
+        secPass,
+        req.body.email
+      );
+      _user.save();
+      
+      /*const data={
         user:{
         id:user.id
         }
@@ -41,11 +46,13 @@ router.post('/createUser',[
       const authToken= jwt.sign(data, JWT_SECRET)
     // res.json(user)
     success=true
-    res.json({success,authToken})
-} catch (error) {
+    res.json({success,authToken})*/
+    /*}  
+    catch (error) {
         console.error(error.message)
         res.status(500).send("Check for errors")
-}});
+}*/
+});
 
 
 
