@@ -3,7 +3,8 @@ const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken');
-const User = require('../Models/user')
+const User = require('../Models/user');
+const { getDb } = require('../util/database');
 const db = require('../util/database').getDb;
 
 
@@ -21,7 +22,9 @@ router.post('/createUser',[
     }
      // id email already exists logic
     try {
-        const user= await User.finOne({email:req.body.email});
+      const _db = getDb();
+      //console.log("findOne error check" +_db);(')
+      const user= await _db.collection('users').findOne({email:req.body.email});
     
     if (user){
         return res.status(400).json({success,error:"Email already exists"})
