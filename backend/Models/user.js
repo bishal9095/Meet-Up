@@ -25,6 +25,12 @@ class User {
              console.log(err);
         });
     } 
+    async finOne(obj){
+        db=getDb();
+        const coll=db.collection('users');
+        const result = await coll.findOne(obj);
+        return result
+    }
 };
  
 /*const mongoose = require('mongoose');

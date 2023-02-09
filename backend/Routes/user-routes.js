@@ -19,16 +19,14 @@ router.post('/createUser',[
     if (!errors.isEmpty()) { 
       return res.status(400).json({success, errors: errors.array() });
     }
-    /* // id email already exists logic
+     // id email already exists logic
     try {
-        const _user= await db.collection('users').findOne({}, function (err, result) {if (findErr) throw findErr;
-          console.log(result.name);
-          })
+        const user= await User.finOne({email:req.body.email});
     
-    if (_user){
+    if (user){
         return res.status(400).json({success,error:"Email already exists"})
     }
-    */
+    
     const salt= await bcrypt.genSalt(10)
     const secPass= await bcrypt.hash(req.body.password,salt)
     const _user= await new User(
@@ -52,7 +50,11 @@ router.post('/createUser',[
         console.error(error.message)
         res.status(500).send("Check for errors")
 }*/
-});
+}
+catch (error) {
+  console.error(error.message)
+  res.status(500).send("Check for errors")
+}});
 
 
 
