@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken');
 const User = require('../Models/user')
-const db = require('../util/database').getDb;
+const getDb = require('../util/database').getDb;
 
 
 router.post('/createUser',[
@@ -21,15 +21,16 @@ router.post('/createUser',[
     }
      // id email already exists logic
     try {
-        const user= await User.finOne({email:req.body.email});
+        const _db = getDb();
+        const _user= await _db.collection("users").findOne({email:req.body.email});
     
-    if (user){
+    if (_user){
         return res.status(400).json({success,error:"Email already exists"})
     }
     
     const salt= await bcrypt.genSalt(10)
     const secPass= await bcrypt.hash(req.body.password,salt)
-    const _user= await new User(
+    const user= await new User(
         req.body.username,
         secPass,
         req.body.email
