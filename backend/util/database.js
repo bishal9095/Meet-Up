@@ -16,7 +16,7 @@ const mongoConnect = (callback) => {
         throw err;
     });
 };
-//connection  pooling behind the scenes by mongoDb
+//connection pooling behind the scenes by mongoDb
 const getDb = () => {
     if(_db){
         return _db;

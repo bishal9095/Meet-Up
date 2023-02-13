@@ -90,19 +90,13 @@ router.post('/loginUser',[
 });
 
 // Getting all users
-/*
+
 router.get('/allUsers',
 async(req,res)=>{
   try{
     const _db = getDb();
-    var users = _db.collection('users').find({}).toArray(function (err, result) {
-      if (err) {
-          res.send(err);
-      } else {
-
-          res.send(result);
-      }
-  })
+    var users = await _db.collection('users').find({},'email username').toArray();
+    console.log(users)
     res.status(200).json({users});
   }
   catch(error){
@@ -110,5 +104,5 @@ async(req,res)=>{
     console.log(error)
   }
 })
-*/
+
 module.exports = router;
