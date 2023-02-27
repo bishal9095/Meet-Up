@@ -1,4 +1,5 @@
 const getDb = require('../util/database').getDb;
+
 class User {
      constructor(/*age, image, info1, info2, info3, info4, location, match,name */  username, password, email) {
 //       //this.age = age;
@@ -25,12 +26,7 @@ class User {
              console.log(err);
         });
     } 
-    // async getUsers(){
-    //     db=getDb();
-    //     const coll=db.collection('users');
-    //     const result = await coll.findOne(obj);
-    //     return result
-    // }
 };
 
-module.exports  =  User;
+
+module.exports = User;
