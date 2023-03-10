@@ -1,21 +1,26 @@
 import React from "react";
 import { VStack, Box, Divider,HStack,Text,Pressable,Image , Center} from 'native-base';
+import {Dimensions} from 'react-native';
+
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 export default function CardItem () {
   return (
-    <Box py="5" px="3">
+    <Box py="2" px="3">
       <Center py="5">
       <Text fontSize="sm" color="yellow.450">Today @ 9PM</Text>
       </Center>
     
-      <Box bg="yellow.400" py="4" px="3" height={800} maxHeight="100%" borderRadius="10" rounded="10" width={390} maxWidth="100%">
+      <Box bg="yellow.400" py="4" px="3" height={windowHeight*0.87} maxHeight="100%" borderRadius="10" rounded="10" width={390} maxWidth="100%">
         
         <HStack justifyContent="space-between">
           <Box justifyContent="space-between" py="10">
             <VStack space="20">
               
-              <Text color="white" fontSize="xl">
-                Let's talk about avatar!
+              <Text color="white" fontSize="25">
+                Event Name
               </Text>
             </VStack>
             <Pressable rounded="xs" bg="primary.400" alignSelf="flex-start" py="1" px="3">
